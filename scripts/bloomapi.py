@@ -11,7 +11,7 @@ f = open('../data/blooms/bloom1hoppredicate.pickle')
 bloom1hoppred = BloomFilter.fromfile(f)
 f.close()
 
-f = open('../data/blooms/bloom1hopentity.pickle')
+f = open('../data/blooms/bloom1hopentities.pickle')
 bloom1hopentity = BloomFilter.fromfile(f)
 f.close()
 
@@ -19,9 +19,10 @@ f = open('../data/blooms/bloom2hoppredicate.pickle')
 bloom2hoppredicate = BloomFilter.fromfile(f)
 f.close()
 
-f = open('../data/blooms/bloom2hoptypeofentityentity.pickle')
-bloom2hoptypeofentity = BloomFilter.fromfile(f)
+f = open('../data/blooms/bloom2hopentity.pickle')
+bloom2hopentity = BloomFilter.fromfile(f)
 f.close()
+
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -31,59 +32,98 @@ app = Flask(__name__)
 @app.route('/findBloomPaths', methods=['POST'])
 def findBloomPaths():
     d = request.get_json(silent=True)
-    print d
+    es_content = d['ES_content']
+    correct = d['correct']
     lists = []
-    for k,v in d.iteritems():
-        lists.append(v)
+    count = 1
+    for listitem in es_content:
+        lists.append(listitem['list'+str(count)])
+        count += 1
     sequence = range(len(lists))
     result = []
     nodestats = {}
     for perm in itertools.permutations(sequence, 2):
-        for uri1 in lists[perm[0]]:
-            for uri2 in lists[perm[1]]:
+        for uriset1 in lists[perm[0]]:
+            for uriset2 in lists[perm[1]]:
+                uri1 = uriset1['uri']
+                uri2 = uriset2['uri']
                 s = uri1+':'+uri2
                 print s
                 if s in bloom1hoppred:
-                    result.append('%s has 0.5 hop predicate connection in knowledgebase'%s)
+                    result.append('%s has 1 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri1]['connections'] += 1
-                        nodestats[uri1]['sumofweights'] += 0.5
+                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
+                    if uri1 in correct:
+                        nodestats[uri1]['correctlabel'] = 1
+                    nodestats[uri1]['connections'] += 1
+                    nodestats[uri1]['sumofweights'] += 0.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri2]['connections'] += 1
-                        nodestats[uri2]['sumofweights'] += 0.5
-                if s in bloom1hopentity:
-                    result.append('%s has 1 hop entity connection in knowledgebase'%s)
+                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                    if uri2 in correct:
+                        nodestats[uri2]['correctlabel'] = 1
+                    nodestats[uri2]['connections'] += 1
+                    nodestats[uri2]['sumofweights'] += 0.5
+                elif s in bloom1hopentity:
+                    result.append('%s has 1 hop entity:entity connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri1]['connections'] += 1
-                        nodestats[uri1]['sumofweights'] += 1
+                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                    if uri1 in correct:
+                        nodestats[uri1]['correctlabel'] = 1
+                    nodestats[uri1]['connections'] += 1
+                    nodestats[uri1]['sumofweights'] += 1
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri2]['connections'] += 1
-                        nodestats[uri2]['sumofweights'] += 1
-                if s in bloom2hoppredicate:
-                    result.append('%s has 2 hop predicate connection in knowledgebase'%s)
+                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset2['score']}
+                    if uri2 in correct:
+                        nodestats[uri2]['correctlabel'] = 1
+                    nodestats[uri2]['connections'] += 1
+                    nodestats[uri2]['sumofweights'] += 1
+                elif s in bloom2hoppredicate:
+                    result.append('%s has 2 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri1]['connections'] += 1
-                        nodestats[uri1]['sumofweights'] += 1.5
+                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                    if uri1 in correct:
+                        nodestats[uri1]['correctlabel'] = 1
+                    nodestats[uri1]['connections'] += 1
+                    nodestats[uri1]['sumofweights'] += 1.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri2]['connections'] += 1
-                        nodestats[uri2]['sumofweights'] += 1.5
-                if s in bloom2hoptypeofentity:
-                    result.append('%s has 2 hop typeOf connection in knowledgebase'%s)
+                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                    if uri2 in correct:
+                        nodestats[uri2]['correctlabel'] = 1
+                    nodestats[uri2]['connections'] += 1
+                    nodestats[uri2]['sumofweights'] += 1.5
+                elif s in bloom2hopentity:
+                    result.append('%s has 2 hop entity:entity connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri1]['connections'] += 1
-                        nodestats[uri1]['sumofweights'] += 2
+                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                    if uri1 in correct:
+                        nodestats[uri1]['correctlabel'] = 1
+                    nodestats[uri1]['connections'] += 1
+                    nodestats[uri1]['sumofweights'] += 2
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0}
-                        nodestats[uri2]['connections'] += 1
-                        nodestats[uri2]['sumofweights'] += 2
-    finalresult = {'lists':d, 'humanresults': result, 'nodestats': nodestats }
+                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                    if uri2 in correct:
+                        nodestats[uri2]['correctlabel'] = 1
+                    nodestats[uri2]['connections'] += 1
+                    nodestats[uri2]['sumofweights'] += 2.5
+                else:
+                    if uri1 not in nodestats:
+                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
+                    if uri1 in correct:
+                        nodestats[uri1]['correctlabel'] = 1
+                    if uri2 not in nodestats:
+                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                    if uri2 in correct:
+                        nodestats[uri2]['correctlabel'] = 1
+    correctnodestats = {}
+    incorrectnodestats = {}
+    for uri,item in nodestats.iteritems():
+        if  item['correctlabel'] == 1:
+            correctnodestats[uri] = item
+        else:
+            incorrectnodestats[uri] = item
+   
+              
+    finalresult = {'humanresults': result, 'correctnodestats': correctnodestats, 'incorrectnodestats': incorrectnodestats }
     return json.dumps(finalresult)
 
 

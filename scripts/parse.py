@@ -5,7 +5,7 @@ import sys,json,urllib, urllib2, requests
 import requests
 
 
-
+result = []
 count = 0
 f = open(sys.argv[1])
 s = f.read()
@@ -14,7 +14,7 @@ f.close()
 for item in d: 
     req = urllib2.Request('http://localhost:5005/findBloomPaths')
     req.add_header('Content-Type', 'application/json')
-    print json.dumps(item['ES_content']).decode('string_escape')[1:-1]
-    response = urllib2.urlopen(req, json.dumps(item['ES_content']).decode('string_escape')[1:-1])
+    response = urllib2.urlopen(req, json.dumps(item))
     item['response'] = response.read()
-    print json.dumps(item, indent=4, sort_keys=True)
+    result.append(item)
+print json.dumps(result)
