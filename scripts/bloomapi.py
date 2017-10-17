@@ -11,7 +11,7 @@ f = open('../data/blooms/bloom1hoppredicate.pickle')
 bloom1hoppred = BloomFilter.fromfile(f)
 f.close()
 
-f = open('../data/blooms/bloom1hopentities.pickle')
+f = open('../data/blooms/bloom1hopentity.pickle')
 bloom1hopentity = BloomFilter.fromfile(f)
 f.close()
 
@@ -48,70 +48,69 @@ def findBloomPaths():
                 uri1 = uriset1['uri']
                 uri2 = uriset2['uri']
                 s = uri1+':'+uri2
-                print s
                 if s in bloom1hoppred:
                     result.append('%s has 1 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
-                    nodestats[uri1]['sumofweights'] += 0.5
+                    nodestats[uri1]['sumofhops'] += 0.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
-                    nodestats[uri2]['sumofweights'] += 0.5
+                    nodestats[uri2]['sumofhops'] += 0.5
                 elif s in bloom1hopentity:
                     result.append('%s has 1 hop entity:entity connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
-                    nodestats[uri1]['sumofweights'] += 1
+                    nodestats[uri1]['sumofhops'] += 1
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
-                    nodestats[uri2]['sumofweights'] += 1
+                    nodestats[uri2]['sumofhops'] += 1
                 elif s in bloom2hoppredicate:
                     result.append('%s has 2 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
-                    nodestats[uri1]['sumofweights'] += 1.5
+                    nodestats[uri1]['sumofhops'] += 1.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
-                    nodestats[uri2]['sumofweights'] += 1.5
+                    nodestats[uri2]['sumofhops'] += 1.5
                 elif s in bloom2hopentity:
                     result.append('%s has 2 hop entity:entity connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
-                    nodestats[uri1]['sumofweights'] += 2
+                    nodestats[uri1]['sumofhops'] += 2
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
-                    nodestats[uri2]['sumofweights'] += 2.5
+                    nodestats[uri2]['sumofhops'] += 2
                 else:
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofweights':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
     correctnodestats = {}
