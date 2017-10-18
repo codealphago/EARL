@@ -29,31 +29,26 @@ Z1 = []
 X2 = []
 Y2 = []
 Z2 = []
-for item in d:
-    for inc in item['incorrectnodestats']:
-        feat = []
-        incorrectconn.append(inc['sumhopspath'])
-        feat.append(inc['sumhopspath'])
-        incorrectweights.append(inc['pathlength'])
-        feat.append(inc['pathlength'])
-        incorrectes.append(inc['elasticsearchscore'])
-        #feat.append(inc['elasticsearchscore'])
-        X1.append(inc['sumhopspath'])
-        Y1.append(inc['pathlength'])
-        Z1.append(inc['elasticsearchscore'])
-    #plt.plot(X,Y, 'ro')
-    for nc in item['correctnodestats']:
-        feat = []
-        correctconn.append(nc['sumhopspath'])
-        feat.append(nc['sumhopspath'])
-        correctweights.append(nc['pathlength'])
-        feat.append(nc['pathlength'])
-        correctes.append(nc['elasticsearchscore'])
-        #feat.append(nc['elasticsearchscore'])
-        X2.append(nc['sumhopspath'])
-        Y2.append(nc['pathlength'])
-        Z2.append(nc['elasticsearchscore'])
-
+for question in d:
+    for listt in question['ES_content']:
+        for k,v in listt.iteritems():
+            if k == 'label':
+                continue
+            for item in v:
+                if item['correctlabel'] == 1:
+                    correctconn.append(item['sumhopspath'])
+                    correctweights.append(item['pathlength'])
+                    correctes.append(item['elasticsearchscore'])
+                    X2.append(item['sumhopspath'])
+                    Y2.append(item['pathlength'])
+                    Z2.append(item['elasticsearchscore']) 
+                else:
+                    incorrectconn.append(item['sumhopspath'])
+                    incorrectweights.append(item['pathlength'])
+                    incorrectes.append(item['elasticsearchscore'])
+                    X1.append(item['sumhopspath'])
+                    Y1.append(item['pathlength'])
+                    Z1.append(item['elasticsearchscore'])
 ax.scatter(X1, Y1, Z1, color='r', marker='1')
 ax.scatter(X2, Y2, Z2, color='b', marker='1')
 ax.set_xlabel('sum hops path')

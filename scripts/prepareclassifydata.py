@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from __future__ import print_function
-
+import math
 import json,sys
 
 
@@ -17,7 +17,8 @@ finalresults = []
 for item in d:
     newitem = {}
     newitem['ES_content'] = []
-    #newitem['ES_content'] = item['ES_content']
+    nodestats = json.loads(item['response'])
+    numoflists = len(item['correct'])
     for l in item['ES_content']:
         ldict = {}
         for k,v in l.iteritems():
@@ -28,30 +29,21 @@ for item in d:
             for uriset in v:
                 if uriset['uri'] in item['correct']:
                     uriset['correctlabel'] = 1
+                    uriset['connections'] = (nodestats['correctnodestats'][uriset['uri']]['connections'])/float(numoflists)
+                    uriset['sumofhops'] = (nodestats['correctnodestats'][uriset['uri']]['sumofhops'])/float(numoflists)
+                    uriset['pathlength'] = (nodestats['correctnodestats'][uriset['uri']]['pathlength'])/float(math.pow(15,numoflists))
+                    uriset['sumhopspath'] = (nodestats['correctnodestats'][uriset['uri']]['sumhopspath'])/float(math.pow(15,numoflists))
+                    uriset['elasticsearchscore'] = nodestats['correctnodestats'][uriset['uri']]['elasticsearchscore']
                 else:
                     uriset['correctlabel'] = 0
+                    uriset['connections'] = (nodestats['incorrectnodestats'][uriset['uri']]['connections'])/float(numoflists)
+                    uriset['sumofhops'] = (nodestats['incorrectnodestats'][uriset['uri']]['sumofhops'])/float(numoflists)
+                    uriset['pathlength'] = (nodestats['incorrectnodestats'][uriset['uri']]['pathlength'])/float(math.pow(15,numoflists))
+                    uriset['sumhopspath'] = (nodestats['incorrectnodestats'][uriset['uri']]['sumhopspath'])/float(math.pow(15,numoflists))
+                    uriset['elasticsearchscore'] = nodestats['incorrectnodestats'][uriset['uri']]['elasticsearchscore']
                 larr.append(uriset)
             ldict[k] = larr
         newitem['ES_content'].append(ldict)
-    correctlength = len(item['correct'])
-    count = 0
-    nodestats = json.loads(item['response'])
-    newitem['correctnodestats'] = []
-    for uri,tupl in nodestats['correctnodestats'].iteritems():
-        correctdict = {}
-        correctdict['uri'] = uri
-        correctdict['connections'] = tupl['connections']/float(correctlength)
-        correctdict['sumofhops'] = tupl['sumofhops']/float(correctlength)
-        correctdict['elasticsearchscore'] = tupl['elasticsearchscore']
-        newitem['correctnodestats'].append(correctdict)
-    newitem['incorrectnodestats'] = []
-    for uri,tupl in nodestats['incorrectnodestats'].iteritems():
-        incorrectdict = {}
-        incorrectdict['uri'] = uri
-        incorrectdict['connections'] = tupl['connections']/float(correctlength)
-        incorrectdict['sumofhops'] = tupl['sumofhops']/float(correctlength)
-        incorrectdict['elasticsearchscore'] = tupl['elasticsearchscore']
-        newitem['incorrectnodestats'].append(incorrectdict)
     finalresults.append(newitem)
 print(json.dumps(finalresults), file = f)
 
