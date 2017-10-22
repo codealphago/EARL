@@ -87,7 +87,7 @@ http://dbpedia.org/property/rtBackup
 http://dbpedia.org/property/mxgpManufacturers
 http://www.telegraph.co.uk/property/main.jhtml?xml=/property/2005/05/28/plaundry28.xml
 http://dbpedia.org/property/páginaWeb
-http://dbpedia.org/property/deadurl
+http://xmlns.com/foaf/0.1/thumbnail
 http://dbpedia.org/property/conf3Champ
 http://dbpedia.org/property/alternativeSpellings
 http://dbpedia.org/property/child16Agency
@@ -525,6 +525,7 @@ http://dbpedia.org/property/chirality
 http://dbpedia.org/property/formerpm
 http://dbpedia.org/property/mottoTranslation
 http://dbpedia.org/property/asanaType
+http://dbpedia.org/property/deadurl
 http://dbpedia.org/property/origins'Country
 http://dbpedia.org/property/archiveUrl
 http://dbpedia.org/property/softballfield
@@ -612,6 +613,7 @@ http://dbpedia.org/property/wr4Starter
 http://dbpedia.org/property/programme
 http://dbpedia.org/property/administeredBy
 http://dbpedia.org/ontology/headAlloy
+http://xmlns.com/foaf/0.1/logo
 http://dbpedia.org/property/cteams
 http://dbpedia.org/property/mostrecentteam
 http://dbpedia.org/property/cocmmittees
@@ -3871,7 +3873,7 @@ http://dbpedia.org/property/fastDriver
 http://dbpedia.org/ontology/Guitarist
 http://dbpedia.org/property/episcopalConference
 http://dbpedia.org/property/headDivingCoach
-http://dbpedia.org/property/sectionsCreated
+http://dbpedia.org/property/missiles
 http://dbpedia.org/property/useDates
 http://property.timesonline.co.uk/tol/life_and_style/property/article1487500.ece
 http://dbpedia.org/property/exhibitionDesigners
@@ -4397,6 +4399,7 @@ http://dbpedia.org/property/reboundsLeader
 http://www.smh.com.au/news/property/super-soaker/2006/06/07/1149359784288.html
 http://dbpedia.org/property/région
 http://dbpedia.org/property/imageWidth
+http://umbel.org/umbel#isLike
 http://dbpedia.org/property/deputymayor
 http://dbpedia.org/property/suffragan
 http://dbpedia.org/property/sarjatasoMiehet
@@ -4797,6 +4800,7 @@ http://dbpedia.org/property/commons
 http://dbpedia.org/property/nationalCouncil
 http://dbpedia.org/property/gener
 http://dbpedia.org/property/''clade''_
+http://dbpedia.org/property/foundationPlace
 http://dbpedia.org/ontology/Writer
 http://dbpedia.org/property/fast1RiderSbk
 http://dbpedia.org/ontology/operatingSystem
@@ -5966,6 +5970,7 @@ http://dbpedia.org/property/windance
 http://dbpedia.org/property/ba
 http://dbpedia.org/property/guests
 http://dbpedia.org/property/firstAutherOfSeries
+http://dbpedia.org/property/formerPublisher
 http://dbpedia.org/property/cityOfLicense
 http://dbpedia.org/property/significance
 http://dbpedia.org/property/fastRiderMotogpBike
@@ -6151,6 +6156,7 @@ http://dbpedia.org/ontology/countryWithFirstSatellite
 http://dbpedia.org/property/firstAscent
 http://dbpedia.org/property/emeritusPatriarch
 http://www.brisbanetimes.com.au/business/property/new-32storey-hotel-planned-for-cbd-20101129-18e1i.html
+http://dbpedia.org/property/today'sFrontPage
 http://dbpedia.org/ontology/Diocese
 http://dbpedia.org/property/aTeam
 http://dbpedia.org/property/catchmentKm
@@ -6258,6 +6264,7 @@ http://dbpedia.org/property/postgrouping
 http://dbpedia.org/property/wikipediaItalia
 http://dbpedia.org/property/salesAgent
 http://dbpedia.org/property/positionOrQuorum
+http://xmlns.com/foaf/0.1/depiction
 http://dbpedia.org/property/träin
 http://dbpedia.org/property/degree
 http://dbpedia.org/property/adaption
@@ -6834,7 +6841,7 @@ http://dbpedia.org/property/divisionLocation
 http://dbpedia.org/property/professionn
 http://www.telegraph.co.uk/property/9258085/The-rock-n-roll-house-at-Pooh-corner.html
 http://dbpedia.org/ontology/biome
-http://dbpedia.org/property/missiles
+http://www.w3.org/1999/02/22-rdf-syntax-ns#type
 http://dbpedia.org/property/nearNw
 http://dbpedia.org/property/dialog
 http://dbpedia.org/property/allocation
@@ -7709,6 +7716,7 @@ http://dbpedia.org/property/blankData
 http://dbpedia.org/property/reference
 http://dbpedia.org/property/row410Text
 http://dbpedia.org/property/headcoach
+http://purl.org/dc/terms/publisher
 http://dbpedia.org/property/subdivisionDastype
 http://dbpedia.org/property/admissions
 http://dbpedia.org/property/child6Agency
@@ -7907,7 +7915,7 @@ http://dbpedia.org/property/sovereignty
 http://dbpedia.org/property/country5ClaimDivisions
 http://dbpedia.org/property/pastschools
 http://dbpedia.org/property/stuido
-http://dbpedia.org/property/foundationPlace
+http://purl.org/linguistics/gold/hypernym
 http://dbpedia.org/property/formerlyNames
 http://www.bangkokpost.com/property/news/360396/pace-plans-ipo-by-end-of-july
 http://dbpedia.org/property/organisedBy
@@ -8465,7 +8473,7 @@ http://dbpedia.org/property/director/producer
 http://uniregistry.link/extensions/property/
 http://dbpedia.org/property/institution
 http://dbpedia.org/property/editor1First
-http://dbpedia.org/property/residency
+http://dbpedia.org/property/rechteNebenflüsse
 http://dbpedia.org/property/место
 http://dbpedia.org/property/horsename
 http://dbpedia.org/property/yearastart
@@ -8566,7 +8574,7 @@ http://dbpedia.org/property/officeLocations
 http://dbpedia.org/property/villain(s)_
 http://dbpedia.org/property/team7Abbrev
 http://dbpedia.org/property/researcher
-http://dbpedia.org/property/restingplce
+http://xmlns.com/foaf/0.1/homepage
 http://dbpedia.org/property/award5Represented
 http://dbpedia.org/property/viceLeaderName
 http://dbpedia.org/property/media/disrtribution
@@ -10189,7 +10197,7 @@ http://dbpedia.org/property/luster
 http://dbpedia.org/property/postalCodeTyupe
 http://dbpedia.org/property/architectOrBuilder
 http://dbpedia.org/property/rep
-http://dbpedia.org/property/ancestorForm
+http://dbpedia.org/property/associatedLabels
 http://dbpedia.org/property/rev
 http://dbpedia.org/property/wing
 http://dbpedia.org/property/reigion
@@ -11509,7 +11517,7 @@ http://dbpedia.org/property/speciesComplex
 http://dbpedia.org/property/rd2t4Loc
 http://dbpedia.org/property/constituencyEurope
 http://dbpedia.org/property/euParliament
-http://dbpedia.org/property/aircraftHelicopterTrainer
+http://xmlns.com/foaf/0.1/page
 http://dbpedia.org/property/additionalInfo
 http://dbpedia.org/property/timesHeld
 http://dbpedia.org/property/organist
@@ -11860,7 +11868,7 @@ http://dbpedia.org/property/lenguajeProgramación
 http://dbpedia.org/property/leaderTile
 http://dbpedia.org/property/previssue
 http://dbpedia.org/property/books
-http://dbpedia.org/property/today'sFrontPage
+http://dbpedia.org/property/illustrationByArtist
 http://dbpedia.org/property/regnalName
 http://dbpedia.org/property/latestGoalWinPlayer
 http://dbpedia.org/property/homeColour
@@ -11875,7 +11883,7 @@ http://dbpedia.org/property/oldNames
 http://dbpedia.org/property/writer8
 http://dbpedia.org/ontology/automobilePlatform
 http://dbpedia.org/property/marketngDesigner
-http://dbpedia.org/property/formerPublisher
+http://dbpedia.org/property/ancestorForm
 http://dbpedia.org/property/hisMother
 http://dbpedia.org/property/thesisTitle
 http://dbpedia.org/property/writer2
@@ -13555,7 +13563,7 @@ http://dbpedia.org/property/sisterWebsite
 http://dbpedia.org/property/stepparents
 http://dbpedia.org/property/officename
 http://dbpedia.org/property/equipoDebut
-http://dbpedia.org/property/architectOfRecord
+http://dbpedia.org/property/aircraftHelicopterTrainer
 http://dbpedia.org/property/ständischeStellung
 http://dbpedia.org/property/shipMaster
 http://dbpedia.org/property/winner
@@ -13765,6 +13773,7 @@ http://dbpedia.org/property/1stStopover
 http://dbpedia.org/property/developedBy
 http://dbpedia.org/property/bestTime
 http://dbpedia.org/property/booth
+http://www.w3.org/2000/01/rdf-schema#seeAlso
 http://dbpedia.org/property/refereevideo
 http://dbpedia.org/property/aircraftRefueling
 http://dbpedia.org/property/leaguecup
@@ -13842,7 +13851,7 @@ http://dbpedia.org/property/pencillers
 http://dbpedia.org/property/alocationCity
 http://dbpedia.org/property/melody
 http://www.thetimes.co.uk/tto/life/property/article3790805.ece
-http://dbpedia.org/property/rechteNebenflüsse
+http://dbpedia.org/property/residency
 http://dbpedia.org/property/today
 http://dbpedia.org/property/rte
 http://dbpedia.org/property/residence
@@ -14131,7 +14140,7 @@ http://dbpedia.org/property/distribuor
 http://dbpedia.org/property/chairmanLabel
 http://dbpedia.org/property/mainWork
 http://dbpedia.org/property/2cName
-http://dbpedia.org/property/associatedLabels
+http://www.w3.org/2004/02/skos/core#exactMatch
 http://dbpedia.org/property/quays
 http://dbpedia.org/property/currentChairmanAndManagingDirector
 http://dbpedia.org/property/battleHonors
@@ -14268,6 +14277,7 @@ http://dbpedia.org/property/engineName
 http://dbpedia.org/property/coverImage
 http://dbpedia.org/property/msUsa
 http://www.telegraph.co.uk/property/luxuryhomes/8410974/Britains-richest-villages.html
+http://dbpedia.org/property/restingplce
 http://dbpedia.org/property/mountain
 http://dbpedia.org/property/googleMap
 http://dbpedia.org/property/imaging
@@ -14423,7 +14433,7 @@ http://dbpedia.org/property/loci5name
 http://dbpedia.org/property/10Affiliations
 http://dbpedia.org/property/arranger
 http://dbpedia.org/property/userInterface
-http://dbpedia.org/property/illustrationByArtist
+http://dbpedia.org/property/architectOfRecord
 http://www.showcase.com/property/3400-International-Drive-NW/Washington/District-of-Columbia/129330
 http://dbpedia.org/property/opentheme
 http://dbpedia.org/property/secondRider
@@ -16252,6 +16262,7 @@ http://dbpedia.org/property/alternativeNameScripting
 http://dbpedia.org/property/outcomeNote
 http://dbpedia.org/property/typeSuperior
 http://dbpedia.org/property/boatClub
+http://dbpedia.org/property/sectionsCreated
 http://dbpedia.org/property/usedfor
 http://dbpedia.org/property/previousSingle
 http://dbpedia.org/property/siderealDay
@@ -17130,6 +17141,7 @@ http://dbpedia.org/property/deck
 http://dbpedia.org/property/alttitle
 http://dbpedia.org/property/umpire
 http://www.macquarie.com.au/au/property/acrobat/mle_july_2002_newsletter.pdf
+http://www.w3.org/2002/07/owl#differentFrom
 http://dbpedia.org/property/webiste
 http://dbpedia.org/property/comp1Result
 http://dbpedia.org/property/tributary
@@ -17468,6 +17480,7 @@ http://dbpedia.org/property/directorOfDevelopmentLeagueOperations
 http://dbpedia.org/property/with
 http://dbpedia.org/property/stimuli
 http://dbpedia.org/property/shipStatus
+http://rdvocab.info/RDARelationshipsWEMI/manifestationOfWork
 http://dbpedia.org/property/origin
 http://www.nzherald.co.nz/property/news/article.cfm?c_id=8&objectid=10354769
 http://www.telegraph.co.uk/property/3310965/Asylum-a-question-of-value-or-values.html
