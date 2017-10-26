@@ -19,10 +19,6 @@ f = open('../data/blooms/bloom2hoppredicate.pickle')
 bloom2hoppredicate = BloomFilter.fromfile(f)
 f.close()
 
-f = open('../data/blooms/bloom2hopentity.pickle')
-bloom2hopentity = BloomFilter.fromfile(f)
-f.close()
-
 f = open('../data/blooms/bloom2hoptypeofentity.pickle')
 bloom2hoptypeofentity = BloomFilter.fromfile(f)
 f.close()
@@ -55,13 +51,13 @@ def findBloomPaths():
                 if s in bloom1hoppred:
                     result.append('%s has 1 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
                     nodestats[uri1]['sumofhops'] += 0.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
@@ -69,13 +65,13 @@ def findBloomPaths():
                 elif s in bloom1hopentity:
                     result.append('%s has 1 hop entity:entity connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0,   'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
                     nodestats[uri1]['sumofhops'] += 1
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel':0,   'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
@@ -83,78 +79,41 @@ def findBloomPaths():
                 elif s in bloom2hoppredicate:
                     result.append('%s has 2 hop entity:predicate connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0,   'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
                     nodestats[uri1]['sumofhops'] += 1.5
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
                     nodestats[uri2]['sumofhops'] += 1.5
-                elif s in bloom2hopentity:
-                    result.append('%s has 2 hop entity:entity connection in knowledgebase'%s)
-                    if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
-                    if uri1 in correct:
-                        nodestats[uri1]['correctlabel'] = 1
-                    nodestats[uri1]['connections'] += 1
-                    nodestats[uri1]['sumofhops'] += 2.5
-                    if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
-                    if uri2 in correct:
-                        nodestats[uri2]['correctlabel'] = 1
-                    nodestats[uri2]['connections'] += 1
-                    nodestats[uri2]['sumofhops'] += 2.5
                 elif s in bloom2hoptypeofentity:
                     result.append('%s has 2 hop entity:typeof connection in knowledgebase'%s)
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel':0,   'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     nodestats[uri1]['connections'] += 1
                     nodestats[uri1]['sumofhops'] += 2
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
                     nodestats[uri2]['connections'] += 1
                     nodestats[uri2]['sumofhops'] += 2
                 else:
                     if uri1 not in nodestats:
-                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset1['score']}
+                        nodestats[uri1] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset1['score']}
                     if uri1 in correct:
                         nodestats[uri1]['correctlabel'] = 1
                     if uri2 not in nodestats:
-                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0, 'pathmetric':0, 'elasticsearchscore': uriset2['score']}
+                        nodestats[uri2] = {'connections':0, 'sumofhops':0, 'correctlabel': 0,   'elasticsearchscore': uriset2['score']}
                     if uri2 in correct:
                         nodestats[uri2]['correctlabel'] = 1
     nodescorecounter = {}
-    #for perm in itertools.permutations(sequence, len(lists)):
-    #    listpermutation = [lists[i] for i in perm]
-#    sequenceresults = []
-#    for sequence in itertools.product(*lists):
-#        pathlength = 0 
-#        sumhopspath = 0
-#        for uriset1,uriset2 in itertools.combinations(sequence,2):
-#            s = uriset1['uri']+':'+uriset2['uri']
-#            if s in bloom1hoppred:
-#                pathlength += 1
-#                sumhopspath += 0.5 
-#            if s in bloom1hopentity:
-#                pathlength += 1
-#                sumhopspath += 1.0 
-#            if s in bloom2hoppredicate:
-#                pathlength += 1
-#                sumhopspath += 1.5 
-#            if s in bloom2hopentity:
-#                pathlength += 1
-#                sumhopspath += 2
-#        for uriset in sequence:
-#            if sumhopspath != 0:
-#                nodestats[uriset['uri']]['pathmetric'] += pathlength/float(sumhopspath)
     correctnodestats = {}
     incorrectnodestats = {}
     for uri,item in nodestats.iteritems():

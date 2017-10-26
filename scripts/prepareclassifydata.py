@@ -18,7 +18,6 @@ for item in d:
     newitem = {}
     newitem['ES_content'] = []
     nodestats = json.loads(item['response'])
-    numoflists = len(item['correct'])
     for l in item['ES_content']:
         ldict = {}
         for k,v in l.iteritems():
@@ -27,19 +26,16 @@ for item in d:
                 continue
             larr=[]
             for uriset in v:
+                del uriset['score']
                 if uriset['uri'] in item['correct']:
                     uriset['correctlabel'] = 1
-                    uriset['connections'] = (nodestats['correctnodestats'][uriset['uri']]['connections'])/float(numoflists)
-                    uriset['sumofhops'] = (nodestats['correctnodestats'][uriset['uri']]['sumofhops'])/float(numoflists)
-                    uriset['pathlength'] = (nodestats['correctnodestats'][uriset['uri']]['pathlength'])/float(math.pow(15,numoflists))
-                    uriset['sumhopspath'] = (nodestats['correctnodestats'][uriset['uri']]['sumhopspath'])/float(math.pow(15,numoflists))
+                    uriset['connections'] = nodestats['correctnodestats'][uriset['uri']]['connections']
+                    uriset['sumofhops'] = nodestats['correctnodestats'][uriset['uri']]['sumofhops']
                     uriset['elasticsearchscore'] = nodestats['correctnodestats'][uriset['uri']]['elasticsearchscore']
                 else:
                     uriset['correctlabel'] = 0
-                    uriset['connections'] = (nodestats['incorrectnodestats'][uriset['uri']]['connections'])/float(numoflists)
-                    uriset['sumofhops'] = (nodestats['incorrectnodestats'][uriset['uri']]['sumofhops'])/float(numoflists)
-                    uriset['pathlength'] = (nodestats['incorrectnodestats'][uriset['uri']]['pathlength'])/float(math.pow(15,numoflists))
-                    uriset['sumhopspath'] = (nodestats['incorrectnodestats'][uriset['uri']]['sumhopspath'])/float(math.pow(15,numoflists))
+                    uriset['connections'] = nodestats['incorrectnodestats'][uriset['uri']]['connections']
+                    uriset['sumofhops'] = nodestats['incorrectnodestats'][uriset['uri']]['sumofhops']
                     uriset['elasticsearchscore'] = nodestats['incorrectnodestats'][uriset['uri']]['elasticsearchscore']
                 larr.append(uriset)
             ldict[k] = larr
