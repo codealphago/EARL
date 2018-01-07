@@ -13,14 +13,13 @@ class ShallowParser:
 
     def shallowParse(self, text):
         filterednpchunks = []
-        #result = self.annotator.getAnnotations(text)['chunk']
 	result = self.annotator.get_chunks(text)
         print result
         phrases = []
         _phrase = []
         withinNP = False
         for chunk in result:
-            print chunk,_phrase,phrases
+            #print chunk,_phrase,phrases
             if withinNP and chunk[1] == 'B-NP':
                 phrases.append(_phrase)
                 _phrase = []

@@ -63,16 +63,11 @@ class ErPredictor:
         string = re.sub(r"\s{2,}", " ", string)
         return string.strip()
 
-    def predict_cln_phrs(self, clean_phrase):
-        tags = []
-        for phr in clean_phrase:
-            tags.append(predict_phrase(phr))
-        return tags
-
 
     def erPredict(self, chunks):
         erpredictions = []
         for chunk in chunks:
+            chunk = self.clean_str(chunk)
             char_dict = np.load('../models/char_dict.npy').item()
             chunk_clean = [char_dict[char] for char in chunk]
             prediction = self.model.predict(np.concatenate((np.zeros((270-len(chunk_clean))), chunk_clean)).reshape(1,270))
