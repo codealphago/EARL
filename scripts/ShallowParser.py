@@ -18,17 +18,32 @@ class ShallowParser:
         print result
         phrases = []
         _phrase = []
+        withinNP = False
         for chunk in result:
-            if chunk[1] == 'S-NP':
-                phrases.append([chunk[0]])
-                continue
-            if chunk[1] == 'B-NP' or chunk[1] == 'I-NP':
-                _phrase.append(chunk[0])
-                continue
-            if chunk[1] == 'E-NP':
-                _phrase.append(chunk[0])
+            print chunk,_phrase,phrases
+            if withinNP and chunk[1] == 'B-NP':
                 phrases.append(_phrase)
                 _phrase = []
+                _phrase.append(chunk[0])
+                withinNP = True            
+                continue
+            if withinNP and chunk[1] == 'I-NP':
+                _phrase.append(chunk[0])
+                withinNP = True    
+                continue
+            if withinNP and chunk[1] != 'I-NP' and chunk[1] != 'B-NP':
+                phrases.append(_phrase)
+                _phrase = []
+                withinNP = False
+                continue
+            if not withinNP and chunk[1] == 'B-NP':
+                _phrase = []
+                _phrase.append(chunk[0])
+                withinNP = True
+                continue
+        if len(_phrase) > 0:
+            phrases.append(_phrase)
+
         for phrase in phrases:
             filteredchunk = []
             filteredchunkstring = ''
