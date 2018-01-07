@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-from practnlptools.tools import Annotator
+#from practnlptools.tools import Annotator
+from chunker.chunker import Annotator
 from stop_words import get_stop_words
 
 class ShallowParser:
@@ -12,7 +13,8 @@ class ShallowParser:
 
     def shallowParse(self, text):
         filterednpchunks = []
-        result = self.annotator.getAnnotations(text)['chunk']
+        #result = self.annotator.getAnnotations(text)['chunk']
+	result = self.annotator.get_chunks(text)
         print result
         phrases = []
         _phrase = []
