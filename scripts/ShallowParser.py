@@ -2,7 +2,7 @@
 
 #from practnlptools.tools import Annotator
 from chunker.chunker import Annotator
-from stop_words import get_stop_words
+#from stop_words import get_stop_words
 
 class ShallowParser:
     def __init__(self):

@@ -74,9 +74,9 @@ class Config():
     #filename_dev = "data/wiki_abstract_valid.txt"
     #filename_test = "data/wiki_abstract_test.txt"
     #filename_train = "data/wiki_abstract_train.txt"
-    filename_dev = "data/connl_test.txt"
-    filename_test = "data/connl_test.txt"
-    filename_train = "data/connl_train.txt"
+    #filename_dev = "data/connl_test.txt"
+    #filename_test = "data/connl_test.txt"
+    #filename_train = "data/connl_train.txt"
 
 
     #filename_dev = filename_test = filename_train = "data/test.txt" # test
@@ -84,9 +84,9 @@ class Config():
     max_iter = None # if not None, max number of examples in Dataset
 
     # vocab (created from dataset with build_data.py)
-    filename_words = "data/words.txt"
-    filename_tags = "data/tags.txt"
-    filename_chars = "data/chars.txt"
+    filename_words = "../../../models/chunker_model/words.txt"
+    filename_tags = "../../../models/chunker_model/tags.txt"
+    filename_chars = "../../../models/chunker_model/chars.txt"
 
     # training
     train_embeddings = False
