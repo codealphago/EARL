@@ -56,7 +56,7 @@ class Config():
 
 
     # general config
-    dir_output = "../../../models/chunker_model/"
+    dir_output = "../models/chunker_model/"
     dir_model  = dir_output + "model.weights/"
     path_log   = dir_output + "log.txt"
 
@@ -65,9 +65,9 @@ class Config():
     dim_char = 100
 
     # glove files
-    filename_glove = "data/glove.6B/glove.6B.{}d.txt".format(dim_word)
+    filename_glove = "../models/chunker_model/glove.6B/glove.6B.{}d.txt".format(dim_word)
     # trimmed embeddings (created from glove_filename with build_data.py)
-    filename_trimmed = "data/glove.6B.{}d.trimmed.npz".format(dim_word)
+    filename_trimmed = "../models/chunker_model/glove.6B.{}d.trimmed.npz".format(dim_word)
     use_pretrained = True
 
     # dataset
@@ -84,9 +84,9 @@ class Config():
     max_iter = None # if not None, max number of examples in Dataset
 
     # vocab (created from dataset with build_data.py)
-    filename_words = "../../../models/chunker_model/words.txt"
-    filename_tags = "../../../models/chunker_model/tags.txt"
-    filename_chars = "../../../models/chunker_model/chars.txt"
+    filename_words = "../models/chunker_model/words.txt"
+    filename_tags = "../models/chunker_model/tags.txt"
+    filename_chars = "../models/chunker_model/chars.txt"
 
     # training
     train_embeddings = False

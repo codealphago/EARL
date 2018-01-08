@@ -22,6 +22,7 @@ import gensim
 from keras.layers.normalization import BatchNormalization
 #from nltk.corpus import stopwords
 import sys
+import string
 
 
 class ErPredictor:
@@ -63,16 +64,11 @@ class ErPredictor:
         string = re.sub(r"\s{2,}", " ", string)
         return string.strip()
 
-    def predict_cln_phrs(self, clean_phrase):
-        tags = []
-        for phr in clean_phrase:
-            tags.append(predict_phrase(phr))
-        return tags
-
 
     def erPredict(self, chunks):
         erpredictions = []
         for chunk in chunks:
+            chunk = chunk.translate(None, string.punctuation)
             char_dict = np.load('../models/char_dict.npy').item()
             chunk_clean = [char_dict[char] for char in chunk]
             prediction = self.model.predict(np.concatenate((np.zeros((270-len(chunk_clean))), chunk_clean)).reshape(1,270))
@@ -85,5 +81,5 @@ class ErPredictor:
 
 if __name__=='__main__':
     e = ErPredictor()
-    print e.erPredict(['There', 'people', 'world', 'better', 'place', 'me.'])
+    print e.erPredict(['There:', 'people', 'world', 'better', 'place', 'me?'])
 
