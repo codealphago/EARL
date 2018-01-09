@@ -24,6 +24,9 @@ from keras.layers.normalization import BatchNormalization
 import sys
 import string
 
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 
 class ErPredictor:
     def __init__(self):
@@ -44,33 +47,18 @@ class ErPredictor:
             sys.exit(1)
         print "Er Predictor Initialized"
 
-    def clean_str(self, string, TREC=False):
-        """
-        Tokenization/string cleaning for all datasets except for SST.
-        Every dataset is lower cased except for TREC
-        """
-        string = re.sub(r"[^A-Za-z0-9(),!?\'\`]", " ", string)
-        string = re.sub(r"\'s", " \'s", string)
-        string = re.sub(r"\'ve", " \'ve", string)
-        string = re.sub(r"n\'t", " n\'t", string)
-        string = re.sub(r"\'re", " \'re", string)
-        string = re.sub(r"\'d", " \'d", string)
-        string = re.sub(r"\'ll", " \'ll", string)
-        string = re.sub(r",", " , ", string)
-        string = re.sub(r"!", " ! ", string)
-        string = re.sub(r"\(", " \( ", string)
-        string = re.sub(r"\)", " \) ", string)
-        string = re.sub(r"\?", " \? ", string)
-        string = re.sub(r"\s{2,}", " ", string)
-        return string.strip()
-
 
     def erPredict(self, chunks):
         erpredictions = []
         for chunk in chunks:
-            chunk = chunk.translate(None, string.punctuation)
+            exclude = set(string.punctuation)
+            chunk = ''.join(ch for ch in chunk if ch not in exclude)
             char_dict = np.load('../models/char_dict.npy').item()
-            chunk_clean = [char_dict[char] for char in chunk]
+            try:
+                chunk_clean = [char_dict[char] for char in chunk]
+            except Exception,e:
+                print "Chunk error %s"%chunk
+                continue
             prediction = self.model.predict(np.concatenate((np.zeros((270-len(chunk_clean))), chunk_clean)).reshape(1,270))
             pred = np.argmax(prediction[0])
             if pred == 0:
@@ -81,5 +69,5 @@ class ErPredictor:
 
 if __name__=='__main__':
     e = ErPredictor()
-    print e.erPredict(['There:', 'people', 'world', 'better', 'place', 'me?'])
+    print e.erPredict(['Fran\xe7ois', 'Cot\xe9','are', 'people', 'world', 'better', 'place', 'me?'])
 

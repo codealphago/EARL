@@ -54,8 +54,13 @@ class ShallowParser:
 	"""
         _phrase = []
         withinNP = False
+        withinVP = False
         for chunk in result:
             #print chunk,_phrase,phrases
+            if not withinNP and chunk[1] == 'B-NP':
+                _phrase.append(chunk[0])
+                withinNP = True            
+                continue
             if withinNP and chunk[1] == 'B-NP':
                 phrases.append(_phrase)
                 _phrase = []
@@ -71,11 +76,37 @@ class ShallowParser:
                 _phrase = []
                 withinNP = False
                 continue
-            if not withinNP and chunk[1] == 'B-NP':
+
+            if not withinVP and chunk[1] == 'B-VP':
                 _phrase = []
                 _phrase.append(chunk[0])
-                withinNP = True
+                withinVP = True
                 continue
+            if not withinVP and chunk[1] == 'B-VP':
+                _phrase.append(chunk[0])
+                withinVP = True
+                continue
+            if withinVP and chunk[1] == 'B-VP':
+                phrases.append(_phrase)
+                _phrase = []
+                _phrase.append(chunk[0])
+                withinVP = True
+                continue
+            if withinVP and chunk[1] == 'I-VP':
+                _phrase.append(chunk[0])
+                withinVP = True
+                continue
+            if withinVP and chunk[1] != 'I-VP' and chunk[1] != 'B-VP':
+                phrases.append(_phrase)
+                _phrase = []
+                withinVP = False
+                continue
+            if not withinVP and chunk[1] == 'B-VP':
+                _phrase = []
+                _phrase.append(chunk[0])
+                withinVP = True
+                continue
+
         if len(_phrase) > 0:
             phrases.append(_phrase)
 
