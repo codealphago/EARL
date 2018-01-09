@@ -4,7 +4,11 @@ import json,sys
 import itertools
 from operator import itemgetter
 from pybloom import BloomFilter
+import numpy as np
+from pytsp import atsp_tsp, run,  dumps_matrix
 
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class JointLinker:
     def __init__(self):
@@ -35,49 +39,59 @@ class JointLinker:
             lists.append(chunk['topkmatches'])
             chunktexts.append(chunk['chunk']) 
             ertypes.append(chunk['class'])
-        sequence = range(len(lists))
-        nodestats = {}
+        totalnodes = sum(len(x) for x in lists)
+        graph = np.zeros(shape=(totalnodes,totalnodes))
+        graph.fill(99999) #not connected in knowledge graph
+        np.fill_diagonal(graph,0)
+        nodestore = []
         count = 0
         for listt in lists:
-            rank = 0
-            if count not in nodestats:
-                nodestats[count] = {}
+            innercount = 0
             for uri in listt:
-                rank += 1
-                if uri not in nodestats[count]:
-                    nodestats[count][uri] = {'connections':0, 'sumofhops':0, 'esrank': rank}
-            if len(nodestats[count]) == 0:
-                nodestats[count]['null'] = {'connections':0, 'sumofhops':0, 'esrank': 100}
-            count += 1
-        for permutation in itertools.permutations(sequence, 2):
-            for uri1 in lists[permutation[0]]:
-                for uri2 in lists[permutation[1]]:
-                    bloomstring = uri1+':'+uri2
-                    if bloomstring in self.bloom1hoppred:
-                        nodestats[permutation[0]][uri1]['connections'] += 1
-                        nodestats[permutation[0]][uri1]['sumofhops'] += 0.5
-                        nodestats[permutation[1]][uri2]['connections'] += 1
-                        nodestats[permutation[1]][uri2]['sumofhops'] += 0.5
-                    elif bloomstring in self.bloom1hopentity:
-                        nodestats[permutation[0]][uri1]['connections'] += 1
-                        nodestats[permutation[0]][uri1]['sumofhops'] += 1
-                        nodestats[permutation[1]][uri2]['connections'] += 1
-                        nodestats[permutation[1]][uri2]['sumofhops'] += 1
-                    elif bloomstring in self.bloom2hoppredicate:
-                        nodestats[permutation[0]][uri1]['connections'] += 1
-                        nodestats[permutation[0]][uri1]['sumofhops'] += 1.5
-                        nodestats[permutation[1]][uri2]['connections'] += 1
-                        nodestats[permutation[1]][uri2]['sumofhops'] += 1.5
-                    elif bloomstring in self.bloom2hoptypeofentity:
-                        nodestats[permutation[0]][uri1]['connections'] += 1
-                        nodestats[permutation[0]][uri1]['sumofhops'] += 2
-                        nodestats[permutation[1]][uri2]['connections'] += 1
-                        nodestats[permutation[1]][uri2]['sumofhops'] += 2
-        for k1,v1 in nodestats.iteritems():
-            for k2,v2 in v1.iteritems():
-                nodestats[k1][k2]['connections'] /= float(len(lists))
-                nodestats[k1][k2]['sumofhops'] /= float(len(lists))
-            
+                nodestore.append(uri+';'+str(count)+';'+str(innercount))
+                count += 1
+                innercount += 1
+        for uri1 in nodestore:
+            for uri2 in nodestore:
+                uri1filt = uri1.split(';')[0]
+                uri2filt = uri2.split(';')[0]
+                uri1pos = int(uri1.split(';')[1])
+                uri2pos = int(uri2.split(';')[1])
+                uri1rank = int(uri1.split(';')[2])
+                uri2rank = int(uri2.split(';')[2])
+                bloomstring1 = uri1filt+':'+uri2filt
+                bloomstring2 = uri2filt+':'+uri1filt
+                if bloomstring1 in self.bloom1hoppred or bloomstring2 in self.bloom1hoppred:
+                    graph[uri1pos][uri2pos] = 0.5 + uri1rank + uri2rank
+                    graph[uri2pos][uri1pos] = 0.5 + uri1rank + uri2rank
+                elif bloomstring1 in self.bloom1hopentity or bloomstring2 in self.bloom1hopentity: 
+                    graph[uri1pos][uri2pos] = 1 + uri1rank + uri2rank
+                    graph[uri2pos][uri1pos] = 1 + uri1rank + uri2rank
+                elif bloomstring1 in self.bloom2hoppredicate or bloomstring2 in self.bloom2hoppredicate:
+                    graph[uri1pos][uri2pos] = 1.5 + uri1rank + uri2rank
+                    graph[uri2pos][uri1pos] = 1.5 + uri1rank + uri2rank
+                elif bloomstring1 in self.bloom2hoptypeofentity or bloomstring2 in self.bloom2hoptypeofentity:
+                    graph[uri1pos][uri2pos] = 2 + uri1rank + uri2rank
+                    graph[uri2pos][uri1pos] = 2 + uri1rank + uri2rank
+
+        gtsp_sets_s = []
+        innercount = 1
+        outercount = 1
+        for listt in lists:
+            innerlist = [outercount]
+            for uri in listt:
+                innerlist.append(innercount)
+                innercount += 1 
+            innerlist.append(-1) 
+            outercount += 1
+            gtsp_sets_s.append(innerlist)
+
+        outf = "/tmp/myroute.tsp"
+        with open(outf, 'w') as dest:
+            dest.write(dumps_matrix(graph, gtsp_sets_s, len(lists), name="myroute"))
+        tour = run(outf, start=None, solver="GLKH")
+        print tour
+        sys.exit(1)
         return {'nodefeatures': nodestats, 'chunktext': chunktexts, 'ertypes': ertypes}
     
 
