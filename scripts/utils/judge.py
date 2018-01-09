@@ -24,21 +24,25 @@ for item in d:
 f = open(sys.argv[2])
 s = f.read()
 d = json.loads(s)
-f.close()
 for item in d:
     itarr = []
-    for ent in item['entities']:
-         for uri in ent['uris']:
-             itarr.append(uri['uri'])
-    for rel in item['relations']:
-         for uri in rel['uris']:
-             itarr.append(uri['uri'])
+    if 'entities' in item:
+        if len(item['entities']) > 0:
+            for ent in item['entities']:
+                itarr.append(ent['uris'][0]['uri'][0])
+    if 'relations' in item:
+        if len(item['relations']) > 0:
+            for rel in item['relations']:
+                itarr.append(rel['uris'][0]['uri'][0])
     earltest.append(itarr)
+f.close()
+
 
 correct = 0
 wrong = 0
 total = 0
 for idx,arr in enumerate(lcqgold):
+    print (lcqgold[idx],earltest[idx])
     for uri in arr:
         if '/resource/' in uri:
             if uri in earltest[idx]:

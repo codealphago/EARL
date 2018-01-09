@@ -30,6 +30,7 @@ class ErPredictor:
         try:
             model_j = '../models/er.json'
             model_wgt = '../models/er.h5'
+            self.char_dict = np.load('char_dict.npy').item()
             max_len = 283
             json_file = open(model_j, 'r')
             model_json = json_file.read()
@@ -48,8 +49,7 @@ class ErPredictor:
         erpredictions = []
         for chunk in chunks:
             chunk = chunk.translate(None, string.punctuation)
-            char_dict = np.load('../models/char_dict.npy').item()
-            chunk_clean = [char_dict[char] for char in chunk]
+            chunk_clean = [self.char_dict[char] for char in chunk]
             prediction = self.model.predict(np.concatenate((np.zeros((270-len(chunk_clean))), chunk_clean)).reshape(1,270))
             pred = np.argmax(prediction[0])
             if pred == 0:

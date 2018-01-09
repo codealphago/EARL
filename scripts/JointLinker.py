@@ -6,6 +6,7 @@ from operator import itemgetter
 from pybloom import BloomFilter
 import numpy as np
 from pytsp import atsp_tsp, run,  dumps_matrix
+import os,glob
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -39,6 +40,8 @@ class JointLinker:
             lists.append(chunk['topkmatches'])
             chunktexts.append(chunk['chunk']) 
             ertypes.append(chunk['class'])
+        if len(lists) == 1:
+            return {'resultnodes': [lists[0][0]], 'chunktext': chunktexts, 'ertypes': ertypes}
         totalnodes = sum(len(x) for x in lists)
         graph = np.zeros(shape=(totalnodes,totalnodes))
         graph.fill(99999) #not connected in knowledge graph
@@ -48,17 +51,17 @@ class JointLinker:
         for listt in lists:
             innercount = 0
             for uri in listt:
-                nodestore.append(uri+';'+str(count)+';'+str(innercount))
+                nodestore.append(uri+';#'+str(count)+';#'+str(innercount))
                 count += 1
                 innercount += 1
         for uri1 in nodestore:
             for uri2 in nodestore:
-                uri1filt = uri1.split(';')[0]
-                uri2filt = uri2.split(';')[0]
-                uri1pos = int(uri1.split(';')[1])
-                uri2pos = int(uri2.split(';')[1])
-                uri1rank = int(uri1.split(';')[2])
-                uri2rank = int(uri2.split(';')[2])
+                uri1filt = uri1.split(';#')[0]
+                uri2filt = uri2.split(';#')[0]
+                uri1pos = int(uri1.split(';#')[1])
+                uri2pos = int(uri2.split(';#')[1])
+                uri1rank = int(uri1.split(';#')[2])
+                uri2rank = int(uri2.split(';#')[2])
                 bloomstring1 = uri1filt+':'+uri2filt
                 bloomstring2 = uri2filt+':'+uri1filt
                 if bloomstring1 in self.bloom1hoppred or bloomstring2 in self.bloom1hoppred:
@@ -90,9 +93,13 @@ class JointLinker:
         with open(outf, 'w') as dest:
             dest.write(dumps_matrix(graph, gtsp_sets_s, len(lists), name="myroute"))
         tour = run(outf, start=None, solver="GLKH")
-        print tour
-        sys.exit(1)
-        return {'nodefeatures': nodestats, 'chunktext': chunktexts, 'ertypes': ertypes}
+        nodes = [] 
+        for node in tour['tour']:
+            nodes.append(nodestore[node].split(';')[0])
+        
+        for fl in glob.glob("/tmp/myroute*"):
+            os.remove(fl)
+        return {'resultnodes': nodes, 'chunktext': chunktexts, 'ertypes': ertypes}
     
 
 if __name__ == '__main__':

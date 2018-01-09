@@ -17,21 +17,7 @@ class ReRanker:
 
 
     def reRank(self, topklists):
-        rerankedlists = {}
-        for k1,v1 in topklists['nodefeatures'].iteritems():
-            if k1 == 'chunktext' or k1 == 'ertypes':
-                continue
-            uris = []
-            featurevectors = []
-            for k2,v2 in v1.iteritems():
-                uris.append(k2)
-                featurevectors.append([v2['connections'],v2['sumofhops'],v2['esrank']])
-            featurevectors = np.array(featurevectors)
-            dtest = xgb.DMatrix(featurevectors)
-            predictions = self.model.predict(dtest)
-            l = [(float(p),u) for p,u in zip(predictions,uris)]
-            rerankedlists[k1] = sorted(l, key=lambda x: x[0], reverse=True)
-        return {'rerankedlists': rerankedlists, 'chunktext':topklists['chunktext'], 'ertypes': topklists['ertypes']}
+        return {'rerankedlists': topklists['resultnodes'], 'chunktext':topklists['chunktext'], 'ertypes': topklists['ertypes']}
                 
 if __name__ == '__main__':
     r = ReRanker()

@@ -21,22 +21,24 @@ class TextMatch:
                  res = self.es.search(index="dbentityindex9", doc_type="records", body={"query":{"match":{"_all":{"query":chunk['chunk']}}},"size":200})
                  topkents = []
                  for record in res['hits']['hits']:
-                     if len(topkents) > 30:
+                     if len(topkents) > 10:
                          break
                      if record['_source']['uri'] not in topkents:
                          topkents.append(record['_source']['uri'])
-                 matchedChunks.append({'chunk':chunk['chunk'], 'topkmatches': topkents, 'class': 'entity'})
+                 if len(topkents) > 0:
+                     matchedChunks.append({'chunk':chunk['chunk'], 'topkmatches': topkents, 'class': 'entity'})
                  
                      
              if chunk['class'] == 'relation':
                  res = self.es.search(index="dbpredicateindex14", doc_type="records", body={"query":{"match":{"_all":{"query":chunk['chunk'], "fuzziness":"auto"}}},"size":200})
                  topkrels = []
                  for record in res['hits']['hits']:
-                     if len(topkrels) > 30:
+                     if len(topkrels) > 10:
                          break
                      if record['_source']['uri'] not in topkrels:
                          topkrels.append(record['_source']['uri'])
-                 matchedChunks.append({'chunk':chunk['chunk'], 'topkmatches': topkrels, 'class': 'relation'})
+                 if len(topkrels) > 0:
+                     matchedChunks.append({'chunk':chunk['chunk'], 'topkmatches': topkrels, 'class': 'relation'})
         return matchedChunks 
                           
                      

@@ -2,6 +2,7 @@ import numpy as np
 import subprocess
 import os
 import math
+import time
 
 template = """NAME: {name}
 TYPE: GTSP
@@ -122,7 +123,10 @@ def run(tsp_path, start=None, solver="concorde"):
         GLKH = os.environ.get('GLKH', 'GLKH')
         par_path, out_path = _create_lkh_par(tsp_path)
         try:
+            starttime = time.time()
             output = subprocess.check_output([GLKH, par_path], shell=False)
+            endtime = time.time()
+            print(endtime-starttime,' ms')
         except OSError as exc:
             if "No such file or directory" in str(exc):
                 raise TSPSolverNotFound(

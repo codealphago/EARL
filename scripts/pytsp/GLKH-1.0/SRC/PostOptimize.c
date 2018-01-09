@@ -91,7 +91,7 @@ static GainType KOptimize(int *GTour)
 
     /* Create the problem file */
     sprintf(Prefix, "%s.pid%d", Name, getpid());
-    sprintf(ProblemFileName, "TMP/%s.post.tsp", Prefix);
+    sprintf(ProblemFileName, "/tmp/%s.post.tsp", Prefix);
     assert(ProblemFile = fopen(ProblemFileName, "w"));
     fprintf(ProblemFile, "NAME : %s\n", Name);
     fprintf(ProblemFile, "TYPE : %s\n", Type);
@@ -126,7 +126,7 @@ static GainType KOptimize(int *GTour)
     fclose(ProblemFile);
 
     /* Create the parameter file */
-    sprintf(ParFileName, "TMP/%s.post.par", Prefix);
+    sprintf(ParFileName, "/tmp/%s.post.par", Prefix);
     assert(ParFile = fopen(ParFileName, "w"));
     fprintf(ParFile, "PROBLEM_FILE = %s\n", ProblemFileName);
     fprintf(ParFile, "MAX_TRIALS = %d\n", MaxTrials);
@@ -136,7 +136,7 @@ static GainType KOptimize(int *GTour)
     fprintf(ParFile, "SEED = %d\n", Seed);
     if (!Subgradient)
         fprintf(ParFile, "SUBGRADIENT = NO\n");
-    sprintf(TourFileName, "TMP/%s.post.tour", Prefix);
+    sprintf(TourFileName, "/tmp/%s.post.tour", Prefix);
     fprintf(ParFile, "TOUR_FILE = %s\n", TourFileName);
     fclose(ParFile);
 
